@@ -21,7 +21,7 @@ public class SpalseActivity extends AppCompatActivity {
     private ImageView iv_spalse;/*展示log 图片*/
     private TextView tv_spalse_backtime;/*倒计时展示*/
 
-    private int time=3;/*初始化时间*/
+    private int time=10;/*初始化时间*/
 
     /*倒计时采用handler 处理*/
     private Handler mHanlder= new Handler(){

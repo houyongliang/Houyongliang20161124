@@ -3,20 +3,20 @@ package test.bwei.com.houyongliang20161124;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Request;
 import test.bwei.com.houyongliang20161124.adpter.MyAdapter;
@@ -33,7 +33,7 @@ import test.bwei.com.houyongliang20161124.view.PullRecyclerView;
  * date: 2016/11/24 8:55
  * update: 2016/11/24
  */
-public class MainActivity extends AppCompatActivity {
+public class Main3Activity extends AppCompatActivity {
     private String TAG = "MainActivity";/*获取标识*/
 //    private RecyclerView ryView;/*ryview视图对象*/
     private PullRecyclerView ryView;/*ryview视图对象*/
@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Bean.ResultBean.DataBean> listAll;
     private LinkedList<Bean.ResultBean.DataBean> list;
-    private String url = "http://japi.juhe.cn/joke/content/list.from?key= 874ed931559ba07aade103eee279bb37 &page=2&pagesize=10&sort=asc&time=1418745237";
+//    private String url = "http://japi.juhe.cn/joke/content/list.from?key= 874ed931559ba07aade103eee279bb37 &page=2&pagesize=10&sort=asc&time=1418745237";
 
     private int page=2;/*定义页数*/
     private int pagesize=10;/*定义每页展示条数*/
-
+    private String url="http://japi.juhe.cn/joke/content/list.from";
 
     private Handler mHandler=new Handler(){
         @Override
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
         list.addAll(listAll);
         if (adapter == null) {
-            adapter = new MyAdapter(MainActivity.this, list);
+            adapter = new MyAdapter(Main3Activity.this, list);
             ryView.setAdapter(adapter);
 
         } else {
@@ -130,32 +130,56 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private String getUrl(int page, int pagesize) {
-        String ul = "http://japi.juhe.cn/joke/content/list.from?key= 874ed931559ba07aade103eee279bb37 &page=" + page + "&pagesize=" + pagesize + "&sort=asc&time=1418745237";
-        return ul;
-    }
+//    private String getUrl(int page, int pagesize) {
+//        String ul = "http://japi.juhe.cn/joke/content/list.from?key= 874ed931559ba07aade103eee279bb37 &page=" + page + "&pagesize=" + pagesize + "&sort=asc&time=1418745237";
+//        return ul;
+//    }
 
     private void getList(final int what) {
-        String url=getUrl(page, pagesize);
-        Log.e(TAG, "getList: +url"+url );
-        OkHttp.getAsync(url, new OkHttp.DataCallBack() {
+//        String url=getUrl(page, pagesize);
+//        Log.e(TAG, "getList: +url"+url );
+//        OkHttp.getAsync(url, new OkHttp.DataCallBack() {
+//
+//            /*获取数据失败*/
+//            @Override
+//            public void requestFailure(Request request, IOException e) {
+//                Toast.makeText(Main3Activity.this, "亲，请求失败", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            /*成功获取数据*/
+//            @Override
+//            public void requestSuccess(String result) throws Exception {
+//               Log.e(TAG, "requestSuccess: "+result);
+//                Bean bean = Utils.parseJsonWithGson(result, Bean.class);
+//                /*获取数据集合*/
+//                List<Bean.ResultBean.DataBean> data = bean.getResult().getData();
+//                listAll = data;
+//                mHandler.sendEmptyMessageDelayed(what,2000);
+//
+//            }
+//        });
+        Map<String,String> map=new HashMap<String,String>();
 
-            /*获取数据失败*/
+        map.put("key"," 874ed931559ba07aade103eee279bb37 ");
+        map.put("page",page+"");
+        map.put("pagesize",pagesize+"");
+        map.put("sort","asc");
+        map.put("time",""+1418745237);
+        OkHttp.postAsync(url, map, new OkHttp.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-                Toast.makeText(MainActivity.this, "亲，请求失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Main3Activity.this, "亲，请求失败", Toast.LENGTH_SHORT).show();
+
             }
 
-            /*成功获取数据*/
             @Override
             public void requestSuccess(String result) throws Exception {
-               Log.e(TAG, "requestSuccess: "+result);
+                Log.e(TAG, "requestSuccess: "+result);
                 Bean bean = Utils.parseJsonWithGson(result, Bean.class);
                 /*获取数据集合*/
                 List<Bean.ResultBean.DataBean> data = bean.getResult().getData();
                 listAll = data;
                 mHandler.sendEmptyMessageDelayed(what,2000);
-
             }
         });
     }
@@ -166,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
 //        ryView = (RecyclerView) findViewById(R.id.ryView_main);
         ryView = (PullRecyclerView) findViewById(R.id.ryView_main);
 
-        ryView.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.VERTICAL,false));
+        ryView.setLayoutManager(new LinearLayoutManager(Main3Activity.this,LinearLayoutManager.VERTICAL,false));
 
         /*条目点击事件*/
-        ryView.addOnItemTouchListener(new RecyclerViewClickListener(MainActivity.this, ryView.getRecyclerView(), new RecyclerViewClickListener.OnItemClickListener() {
+        ryView.addOnItemTouchListener(new RecyclerViewClickListener(Main3Activity.this, ryView.getRecyclerView(), new RecyclerViewClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 

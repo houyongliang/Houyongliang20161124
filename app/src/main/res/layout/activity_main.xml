@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     tools:context="test.bwei.com.houyongliang20161124.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <test.bwei.com.houyongliang20161124.view.PullRecyclerView
         android:id="@+id/ryView_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       />
+        android:orientation="vertical"></test.bwei.com.houyongliang20161124.view.PullRecyclerView>
+
+
 </RelativeLayout>
